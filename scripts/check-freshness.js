@@ -45,10 +45,15 @@ async function checkUrl(url) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
   try {
-    let res = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: controller.signal, headers: FETCH_HEADERS });
-    if (res.status === 405 || res.status === 501 || INCONCLUSIVE_STATUSES.has(res.status)) {
-      res = await fetch(url, { method: 'GET', redirect: 'follow', signal: controller.signal, headers: FETCH_HEADERS });
-    }
+    // Always use GET, never HEAD. Some sites (SPA/CDN-fronted docs — e.g.
+    // Kaggle's kaggle.com/docs/* pages) route HEAD and GET differently: a
+    // HEAD request to a perfectly valid client-side route can come back 404
+    // from the edge/CDN layer, while the GET a real visitor's browser sends
+    // renders the page fine (confirmed manually for kaggle.com/docs/
+    // efficient-gpu-usage, which this checker previously flagged as broken
+    // even though it loads correctly for humans). Checking with GET matches
+    // what an actual visitor experiences and avoids that false-positive class.
+    const res = await fetch(url, { method: 'GET', redirect: 'follow', signal: controller.signal, headers: FETCH_HEADERS });
     clearTimeout(timeout);
     const ok = res.status >= 200 && res.status < 400;
     const inconclusive = !ok && INCONCLUSIVE_STATUSES.has(res.status);
