@@ -1,0 +1,53 @@
+name: Check freshness
+
+on:
+  schedule:
+    # Daily lightweight ping (06:00 UTC) — status.json only, CHANGELOG.md
+    # entry only if something is genuinely broken (not a 403/429 from bot
+    # protection, see scripts/check-freshness.js).
+    - cron: '0 6 * * *'
+    # Weekly full check (Monday 08:00 UTC) — same link check, plus
+    # recomputes badge-freshness.json and opens/updates a tracking issue
+    # if a link is genuinely broken.
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Determine run type
+        id: runtype
+        run: |
+          if [ "${{ github.event.schedule }}" = "0 8 * * 1" ]; then
+            echo "type=weekly" >> "$GITHUB_OUTPUT"
+          elif [ -z "${{ github.event.schedule }}" ]; then
+            # Manual workflow_dispatch runs do the full check, useful for testing.
+            echo "type=weekly" >> "$GITHUB_OUTPUT"
+          else
+            echo "type=daily" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run freshness check
+        run: node scripts/check-freshness.js ${{ steps.runtype.outputs.type }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Commit updated status/badge/changelog
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add status.json badge-freshness.json CHANGELOG.md
+          git diff --staged --quiet || git commit -m "chore: automated ${{ steps.runtype.outputs.type }} freshness check ($(date -u +%Y-%m-%d))"
+          git push
