@@ -1,0 +1,34 @@
+name: "🔧 Report an outdated or inaccurate entry"
+description: Flag a provider whose free tier, limits, or docs link has changed.
+labels: ["maintenance"]
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Provider name
+      description: Which entry in providers.json / the README is affected?
+      placeholder: e.g. Modal
+    validations:
+      required: true
+  - type: textarea
+    id: what-changed
+    attributes:
+      label: What changed?
+      description: What's wrong or outdated? Be as specific as possible (e.g. "credit amount changed from $30 to $10", "now requires a card", "GPU no longer included").
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Official source link
+      description: A link to the provider's own current documentation confirming the change (not a blog or aggregator).
+      placeholder: https://...
+    validations:
+      required: true
+  - type: input
+    id: checked-date
+    attributes:
+      label: Date you checked this
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true
