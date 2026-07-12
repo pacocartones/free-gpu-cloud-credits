@@ -151,6 +151,66 @@
       "application_required": false,
       "student_only": false,
       "commercial_ok": null
+    },
+    {
+      "name": "AWS SageMaker Studio Lab",
+      "category": "ongoing",
+      "compute_type": "⚠️ Instancia de cómputo con GPU (modelo no revelado en la documentación oficial) o CPU, en notebooks Jupyter independientes",
+      "free_tier": "Entorno de notebooks Jupyter gratuito de AWS que NO requiere cuenta de AWS ni tarjeta de crédito para registrarte — solo una solicitud de acceso sujeta a aprobación",
+      "limits": "GPU: máx. 4 horas por sesión, 4 horas por período de 24h. CPU: máx. 4 horas por sesión, 8 horas por período de 24h. 15GB de almacenamiento persistente, 16GB RAM por proyecto. Número de sesiones ilimitado. La aprobación de la solicitud tarda hasta 5 días hábiles; el enlace de registro expira 7 días después de ser aprobado si no se usa.",
+      "notes": "⚠️ IMPORTANTE — VENTANA DE TIEMPO LIMITADA: la documentación oficial de AWS declara textualmente que el acceso para clientes NUEVOS se cierra el 30 de julio de 2026: \"we have made the decision to close new customer access to Amazon Sagemaker Studio Lab, effective 7/30/26. Existing customers can continue to use the service as normal.\" Si lees esto después de esa fecha, probablemente ya no puedas registrarte (las cuentas ya existentes sí conservan acceso). No requiere tarjeta de crédito (\"don't require billing and credit card information at all at sign-up\"), pero sí requiere aprobación de una solicitud — no es autoservicio instantáneo. El modelo exacto de GPU no se revela en ninguna fuente oficial; cifras como \"T4\" que circulan en sitios de terceros no están confirmadas y no se incluyen aquí.",
+      "docs_url": "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-lab-overview.html",
+      "verified": true,
+      "last_verified": "2026-07-12",
+      "card_required": false,
+      "application_required": true,
+      "student_only": false,
+      "commercial_ok": null
+    },
+    {
+      "name": "Groq Cloud",
+      "category": "ongoing",
+      "compute_type": "LPU (Language Processing Unit) — hardware propio de Groq para inferencia serverless de modelos abiertos (Llama, Qwen, GPT-OSS, Whisper, etc.)",
+      "free_tier": "Nivel \"Free\" permanente (no es un trial con expiración) de acceso por API a modelos alojados en GroqCloud, un escalón por debajo del nivel de pago \"Developer\"",
+      "limits": "Límites de tasa por modelo (documentación oficial, sujetos a cambio): llama-3.1-8b-instant = 30 peticiones/min · 14.4K peticiones/día · 6K tokens/min · 500K tokens/día. llama-3.3-70b-versatile = 30 RPM · 1K/día · 12K TPM · 100K TPD. openai/gpt-oss-120b = 30 RPM · 1K/día · 8K TPM · 200K TPD. whisper-large-v3 = 20 RPM · 2K/día (sin límite de tokens). La documentación aclara que \"puede haber excepciones a estos límites\" y remite al dashboard de la cuenta para cifras exactas y actualizadas.",
+      "notes": "No se declara explícitamente en ningún documento oficial si el nivel Free requiere tarjeta — la documentación de facturación solo aclara que subir al nivel \"Developer\" sí requiere \"a valid payment method (credit card, US bank account, or SEPA debit account)\", lo cual sugiere (pero no confirma directamente) que el nivel Free no la requiere. Nada en las fuentes revisadas confirma o descarta explícitamente el uso comercial en el nivel Free.",
+      "docs_url": "https://console.groq.com/docs/rate-limits",
+      "verified": true,
+      "last_verified": "2026-07-12",
+      "card_required": null,
+      "application_required": false,
+      "student_only": false,
+      "commercial_ok": null
+    },
+    {
+      "name": "Cerebras Inference",
+      "category": "ongoing",
+      "compute_type": "Hardware de inferencia Wafer-Scale Engine (WSE) de Cerebras — la página oficial solo lo describe como \"58x larger than GPUs\", sin especificar modelo WSE-2/WSE-3",
+      "free_tier": "Nivel gratuito con acceso por API a modelos abiertos soportados (gpt-oss-120b, zai-glm-4.7, gemma-4-31b), sin costo, distinto del nivel de pago \"Developer (Pay as You Go)\" que arranca en $10",
+      "limits": "Límites confirmados por modelo en el nivel gratuito: 5 peticiones/min · 30K tokens/min · 1M tokens/hora · 1M tokens/día (idénticos para gpt-oss-120b, zai-glm-4.7 y gemma-4-31b). gemma-4-31b añade un límite de 2 imágenes por petición / 4MB. El nivel de pago Developer elimina los límites por hora/día y sube sustancialmente los demás (ej. gpt-oss-120b: 1K RPM / 1M TPM).",
+      "notes": "La documentación oficial usa \"Free\" y \"Free Trial\" de forma inconsistente para referirse al mismo nivel — no queda claro si es permanente o si expira/convierte a pago con el tiempo; se marca como no confirmado. No se declara si requiere tarjeta de crédito (silencio en la documentación, no una confirmación de que no se requiere). Cerebras también vende un producto de suscripción de pago separado (\"Cerebras Code\", $50-200/mes) que NO debe confundirse con este nivel gratuito de inferencia.",
+      "docs_url": "https://inference-docs.cerebras.ai/support/rate-limits",
+      "verified": true,
+      "last_verified": "2026-07-12",
+      "card_required": null,
+      "application_required": false,
+      "student_only": false,
+      "commercial_ok": null
+    },
+    {
+      "name": "Lightning AI (Lightning Studios)",
+      "category": "ongoing",
+      "compute_type": "GPU único por Studio (T4, L4, L40S, A100, H100, H200 según el plan) — hasta 2 GPUs concurrentes en el nivel Free",
+      "free_tier": "15 créditos mensuales gratis, con 1 Studio activo gratis (reinicio cada 4 horas), confirmado explícitamente en la página oficial: \"No credit card. No commitments.\"",
+      "limits": "15 créditos/mes convertibles a horas de GPU según el tipo (tabla oficial de precios): T4 ≈ 75h/mes, L4 ≈ 31h/mes, L40S ≈ 5h/mes, RTX Pro 6000 ≈ 2h/mes (A100/H100/H200 disponibles pero con muchas menos horas gratis por costar más créditos/hora). Además: 32 núcleos CPU, hasta 2 GPUs concurrentes, 50GB de almacenamiento persistente, 15 peticiones/min y 120.000 tokens/min a las APIs de modelos de Lightning.",
+      "notes": "Confirmado explícitamente en la página oficial: \"No credit card. No commitments.\" — no requiere tarjeta. La cifra de marketing \"80 free GPU hours\" del titular de la página no coincide con la tabla detallada por tipo de GPU (que va de 2 a 75 horas según el modelo) — probablemente esa cifra corresponde solo al caso más favorable (T4); aquí se documentan las cifras exactas de la tabla en vez de la cifra genérica de marketing.",
+      "docs_url": "https://lightning.ai/pricing",
+      "verified": true,
+      "last_verified": "2026-07-12",
+      "card_required": false,
+      "application_required": false,
+      "student_only": false,
+      "commercial_ok": null
     }
   ]
 }
