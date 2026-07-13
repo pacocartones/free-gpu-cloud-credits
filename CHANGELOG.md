@@ -6,6 +6,10 @@ Automated log of real changes detected by the daily/weekly freshness checks. Ent
 
 14/14 providers verified within the last 90 days. 0 broken link(s) found.
 
+## 2026-07-13 (weekly summary)
+
+14/14 providers verified within the last 90 days. 0 broken link(s) found.
+
 ## 2026-07-12 (weekly summary)
 
 10/10 providers verified within the last 90 days. 0 broken link(s) found.
