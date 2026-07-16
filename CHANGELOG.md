@@ -2,6 +2,11 @@
 
 Automated log of real changes detected by the daily/weekly freshness checks. Entries only appear here when something actually changed — not on every run.
 
+## 2026-07-16 (daily check)
+
+1 broken link(s) detected:
+- HuggingFace Spaces (ZeroGPU): https://huggingface.co/docs/hub/en/spaces-zerogpu (This operation was aborted)
+
 ## 2026-07-13 (weekly summary)
 
 14/14 providers verified within the last 90 days. 0 broken link(s) found.
